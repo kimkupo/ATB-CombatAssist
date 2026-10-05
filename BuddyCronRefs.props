@@ -1,0 +1,51 @@
+<Project>
+  <!--
+    Shared reference set for every project whose sources the host compiles at RUNTIME:
+    Quest Behaviors, routines (DefaultCombat), bot bases (RaidBro) and plugins. Nothing links
+    against the DLLs those projects produce - the .csproj exists so an editor type-checks the
+    same sources the host's Roslyn pipeline will compile, against the same assembly set.
+
+    The .csproj files ship to users inside the install next to their sources, so this file has to
+    describe both layouts:
+
+      repo      <root>\BuddyCron\BuddyCron.csproj   + <root>\QuestBehaviors\, <root>\Plugins\Foo\, ...
+      install   protected BuddyCron.dll             + deployed runtime-compiled source projects
+
+    A project picks it up with a depth-independent import (walks up from the project directory).
+    The path goes through a property first because a Condition cannot contain nested quotes:
+
+      <PropertyGroup>
+        <BuddyCronRefsProps>$([MSBuild]::GetPathOfFileAbove('BuddyCronRefs.props', '$(MSBuildThisFileDirectory)'))</BuddyCronRefsProps>
+      </PropertyGroup>
+      <Import Project="$(BuddyCronRefsProps)" Condition="'$(BuddyCronRefsProps)' != ''" />
+
+    Build and Publish preserve a complete application-root hierarchy in their ZIPs, so one copy at
+    that root serves every deployed source project. GetPathOfFileAbove reaches it from every group.
+  -->
+  <PropertyGroup>
+    <!-- Repo iff the host is present as a project rather than as a protected built assembly. -->
+    <BuddyCronRepoRoot Condition="Exists('$(MSBuildThisFileDirectory)BuddyCron\BuddyCron.csproj')">$(MSBuildThisFileDirectory)</BuddyCronRepoRoot>
+    <!-- Release projects can override this to pin an exact matching package version. -->
+    <BuddyCronReferenceAssembliesVersion Condition="'$(BuddyCronReferenceAssembliesVersion)' == ''">1.0.62</BuddyCronReferenceAssembliesVersion>
+  </PropertyGroup>
+  <!-- In the repo: reference the projects. A host API change then shows up in these sources on the
+       next build, and MSBuild orders the builds itself. -->
+  <ItemGroup Condition="'$(BuddyCronRepoRoot)' != ''">
+    <ProjectReference Include="$(BuddyCronRepoRoot)BuddyCron\BuddyCron.csproj" />
+    <ProjectReference Include="$(BuddyCronRepoRoot)Reborn.Behaviors\Reborn.Behaviors.csproj" />
+    <ProjectReference Include="$(BuddyCronRepoRoot)Reborn.Utilities\Reborn.Utilities.csproj" />
+    <!-- [FrameCached] source generator, analyzer-only: the runtime compile runs it as well, so
+         without it the generated members would show as missing in the IDE. -->
+    <ProjectReference Include="$(BuddyCronRepoRoot)Reborn.Generators\Reborn.Generators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <Reference Include="GreyMagic">
+      <HintPath>$(BuddyCronRepoRoot)GreyMagic.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <!-- A protected release contains only BuddyCron.dll: its other implementation assemblies are
+       merged or embedded and therefore unavailable to MSBuild. Use the matching compile-only NuGet
+       package instead; it supplies the complete metadata closure without copying runtime DLLs. -->
+  <ItemGroup Condition="'$(BuddyCronRepoRoot)' == ''">
+    <PackageReference Include="BuddyCron.ReferenceAssemblies" Version="$(BuddyCronReferenceAssembliesVersion)" PrivateAssets="all" />
+  </ItemGroup>
+</Project>
