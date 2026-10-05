@@ -6,7 +6,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Threading;
 
-namespace RaidBro
+namespace raidcombat
 {
     public class ToastWindow : Window
     {

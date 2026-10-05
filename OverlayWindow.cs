@@ -9,7 +9,7 @@ using BuddyCron;
 using BuddyCron.Objects;
 using BuddyCron.Profiles;
 
-namespace RaidBro
+namespace raidcombat
 {
     public class OverlaySnapshot
     {
@@ -130,7 +130,7 @@ namespace RaidBro
                 {
                     var me = Core.Player;
                     var target = me?.Target;
-                    UpdateSnapshot(me, target, RaidBro.IsPaused);
+                    UpdateSnapshot(me, target, RaidCombat.IsPaused);
                     if (_currentSnapshot != null)
                         _currentSnapshot.IsRunning = false;
                 }
@@ -390,7 +390,7 @@ namespace RaidBro
             var menu = new ContextMenu();
 
             var miSettings = new MenuItem { Header = "⚙️ Botbase Settings..." };
-            miSettings.Click += (s, e) => RaidBro.ShowSettingsWindow();
+            miSettings.Click += (s, e) => RaidCombat.ShowSettingsWindow();
             menu.Items.Add(miSettings);
 
             menu.Items.Add(new Separator());
@@ -433,7 +433,7 @@ namespace RaidBro
         public void RefreshUI()
         {
             var isRunning = TreeRoot.IsRunning;
-            var isPaused = RaidBro.IsPaused;
+            var isPaused = RaidCombat.IsPaused;
 
             // Check if hide overlay when running option is on
             if (ATBSettings.Instance.HideOverlayWhenRunning && isRunning && !isPaused)

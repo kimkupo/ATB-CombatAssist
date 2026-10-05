@@ -6,7 +6,7 @@ using BuddyCron.Managers;
 using BuddyCron.Objects;
 using Reborn.Utilities;
 
-namespace RaidBro
+namespace raidcombat
 {
     public static class ATBTargeting
     {
@@ -67,7 +67,7 @@ namespace RaidBro
                 // 4. Update overlay snapshot on bot thread
                 if (settings.UseOverlay)
                 {
-                    OverlayWindow.UpdateSnapshot(me, me.Target, RaidBro.IsPaused);
+                    OverlayWindow.UpdateSnapshot(me, me.Target, RaidCombat.IsPaused);
                 }
             }
             catch (Exception)

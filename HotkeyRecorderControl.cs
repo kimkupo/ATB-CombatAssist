@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WinFormsKeys = System.Windows.Forms.Keys;
 
-namespace RaidBro
+namespace raidcombat
 {
     public class HotkeyRecorderControl : Border
     {

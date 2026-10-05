@@ -13,7 +13,7 @@ using Reborn.Behaviors.Treesharp;
 using Reborn.Utilities;
 using Action = Reborn.Behaviors.Treesharp.Action;
 
-namespace RaidBro
+namespace raidcombat
 {
     /// <summary>
     /// Legacy settings wrapper for backward compatibility with any older configs.
@@ -35,9 +35,23 @@ namespace RaidBro
         }
     }
 
-    public class RaidBro : BotBase
+    /// <summary>
+    /// Backward-compatibility alias for RaidBro
+    /// </summary>
+    public static class RaidBro
     {
-        public override string Name => "Combat Assist";
+        public static bool IsPaused
+        {
+            get => RaidCombat.IsPaused;
+            set => RaidCombat.IsPaused = value;
+        }
+
+        public static void ShowSettingsWindow() => RaidCombat.ShowSettingsWindow();
+    }
+
+    public class RaidCombat : BotBase
+    {
+        public override string Name => "raidcombat";
         public override bool WantButton => true;
         public override bool RequiresProfile => false;
         public override PulseFlags PulseFlags => PulseFlags.All;
@@ -137,8 +151,8 @@ namespace RaidBro
                 new Decorator(r => !IsPaused && CanEngage(r), CombatLogic())
             );
 
-            Logging.Write("[ATB] Starting Combat Assist (ATB Engine Active)");
-            ToastWindow.Show("⚡ ATB Combat Assist 已启动", System.Windows.Media.Colors.LimeGreen);
+            Logging.Write("[ATB] Starting raidcombat (ATB Engine Active)");
+            ToastWindow.Show("⚡ raidcombat 已启动", System.Windows.Media.Colors.LimeGreen);
         }
 
         private static bool CanEngage(object r)
@@ -183,7 +197,7 @@ namespace RaidBro
             ATBHotkeys.UnregisterCombatHotkeys();
             OverlayWindow.SetStoppedSnapshot();
             OverlayWindow.UpdateStatus();
-            Logging.Write("[ATB] Stopping Combat Assist");
+            Logging.Write("[ATB] Stopping raidcombat");
         }
 
         public override void OnShutdown()

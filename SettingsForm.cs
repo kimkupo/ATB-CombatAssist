@@ -1,12 +1,12 @@
 using System.Windows.Forms;
 
-namespace RaidBro
+namespace raidcombat
 {
     public class SettingsForm : Form
     {
         public SettingsForm()
         {
-            RaidBro.ShowSettingsWindow();
+            RaidCombat.ShowSettingsWindow();
         }
     }
 }

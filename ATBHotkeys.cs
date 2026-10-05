@@ -4,7 +4,7 @@ using BuddyCron.Profiles;
 using Reborn.Utilities;
 using WinFormsKeys = System.Windows.Forms.Keys;
 
-namespace RaidBro
+namespace raidcombat
 {
     public static class ATBHotkeys
     {
@@ -140,8 +140,8 @@ namespace RaidBro
 
         public static void TriggerPause()
         {
-            RaidBro.IsPaused = !RaidBro.IsPaused;
-            if (RaidBro.IsPaused)
+            RaidCombat.IsPaused = !RaidCombat.IsPaused;
+            if (RaidCombat.IsPaused)
             {
                 ToastWindow.Show("⏸️ ATB Paused!", Colors.Gold);
                 Logging.Write("[ATB] Combat Assist Paused!");
