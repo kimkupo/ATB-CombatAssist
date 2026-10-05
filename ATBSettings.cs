@@ -6,7 +6,7 @@ using System.Windows.Input;
 using BuddyCron.Settings;
 using Reborn.Utilities.Settings;
 
-namespace raidcombat
+namespace RaidCombat
 {
     public enum AutoTargetMode
     {

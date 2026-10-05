@@ -4,7 +4,7 @@ using BuddyCron.Profiles;
 using Reborn.Utilities;
 using WinFormsKeys = System.Windows.Forms.Keys;
 
-namespace raidcombat
+namespace RaidCombat
 {
     public static class ATBHotkeys
     {

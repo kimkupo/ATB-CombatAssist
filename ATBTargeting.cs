@@ -6,7 +6,7 @@ using BuddyCron.Managers;
 using BuddyCron.Objects;
 using Reborn.Utilities;
 
-namespace raidcombat
+namespace RaidCombat
 {
     public static class ATBTargeting
     {

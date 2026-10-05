@@ -13,7 +13,7 @@ using Reborn.Behaviors.Treesharp;
 using Reborn.Utilities;
 using Action = Reborn.Behaviors.Treesharp.Action;
 
-namespace raidcombat
+namespace RaidCombat
 {
     /// <summary>
     /// Legacy settings wrapper for backward compatibility with any older configs.
@@ -51,7 +51,7 @@ namespace raidcombat
 
     public class RaidCombat : BotBase
     {
-        public override string Name => "raidcombat";
+        public override string Name => "RaidCombat";
         public override bool WantButton => true;
         public override bool RequiresProfile => false;
         public override PulseFlags PulseFlags => PulseFlags.All;
@@ -151,8 +151,8 @@ namespace raidcombat
                 new Decorator(r => !IsPaused && CanEngage(r), CombatLogic())
             );
 
-            Logging.Write("[ATB] Starting raidcombat (ATB Engine Active)");
-            ToastWindow.Show("⚡ raidcombat 已启动", System.Windows.Media.Colors.LimeGreen);
+            Logging.Write("[ATB] Starting RaidCombat (ATB Engine Active)");
+            ToastWindow.Show("⚡ RaidCombat 已启动", System.Windows.Media.Colors.LimeGreen);
         }
 
         private static bool CanEngage(object r)
@@ -197,7 +197,7 @@ namespace raidcombat
             ATBHotkeys.UnregisterCombatHotkeys();
             OverlayWindow.SetStoppedSnapshot();
             OverlayWindow.UpdateStatus();
-            Logging.Write("[ATB] Stopping raidcombat");
+            Logging.Write("[ATB] Stopping RaidCombat");
         }
 
         public override void OnShutdown()

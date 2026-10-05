@@ -14,8 +14,8 @@
     <Platforms>x64</Platforms>
     <PlatformTarget>x64</PlatformTarget>
     <AppendPlatformToOutputPath>false</AppendPlatformToOutputPath>
-    <RootNamespace>raidcombat</RootNamespace>
-    <AssemblyName>raidcombat</AssemblyName>
+    <RootNamespace>RaidCombat</RootNamespace>
+    <AssemblyName>RaidCombat</AssemblyName>
     <SatelliteResourceLanguages>none</SatelliteResourceLanguages>
     <!-- Deployed as SOURCE by BuddyCron's copy target; this DLL is never shipped, so skip the
          project when the solution is published. Building it (the point of this project) is

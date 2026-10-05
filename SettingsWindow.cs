@@ -6,7 +6,7 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using WinFormsKeys = System.Windows.Forms.Keys;
 
-namespace raidcombat
+namespace RaidCombat
 {
     public class SettingsWindow : Window
     {

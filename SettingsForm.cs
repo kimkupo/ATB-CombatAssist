@@ -1,6 +1,6 @@
 using System.Windows.Forms;
 
-namespace raidcombat
+namespace RaidCombat
 {
     public class SettingsForm : Form
     {

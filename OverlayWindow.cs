@@ -9,7 +9,7 @@ using BuddyCron;
 using BuddyCron.Objects;
 using BuddyCron.Profiles;
 
-namespace raidcombat
+namespace RaidCombat
 {
     public class OverlaySnapshot
     {

@@ -78,6 +78,6 @@
 
 ### 📦 安装与配置
 
-1. 将 `raidcombat` 目录放置在 BuddyCron 的 `BotBases/` 文件夹下。
-2. 启动 BuddyCron，在主界面下拉菜单中选择 **raidcombat**。
+1. 将 `RaidCombat` 目录放置在 BuddyCron 的 `BotBases/` 文件夹下。
+2. 启动 BuddyCron，在主界面下拉菜单中选择 **RaidCombat**。
 3. 点击 **Bot Config** 进入现代化配置窗口进行快捷键与 HUD 参数定制。
