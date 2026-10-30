@@ -23,6 +23,7 @@ namespace RaidCombat
         public bool UseAutoTargeting = true;
         public bool UseAutoFace = true;
         public bool UseSmartPull = true;
+        public bool QueuePopped;
     }
 
     public class OverlayWindow : Window
@@ -34,6 +35,7 @@ namespace RaidCombat
         private static readonly SolidColorBrush _brushStopped = CreateFrozenBrush(Color.FromArgb(220, 80, 80, 80));
         private static readonly SolidColorBrush _brushPaused = CreateFrozenBrush(Color.FromArgb(220, 230, 126, 34));
         private static readonly SolidColorBrush _brushRunning = CreateFrozenBrush(Color.FromArgb(220, 46, 204, 113));
+        private static readonly SolidColorBrush _brushQueuePopped = CreateFrozenBrush(Color.FromArgb(240, 255, 140, 0));
         private static readonly SolidColorBrush _brushHpGreen = CreateFrozenBrush(Color.FromArgb(240, 46, 204, 113));
         private static readonly SolidColorBrush _brushHpYellow = CreateFrozenBrush(Color.FromArgb(240, 241, 196, 15));
         private static readonly SolidColorBrush _brushHpRed = CreateFrozenBrush(Color.FromArgb(240, 231, 76, 60));
@@ -76,7 +78,8 @@ namespace RaidCombat
                     TargetMode = ATBSettings.Instance.TargetMode,
                     UseAutoTargeting = ATBSettings.Instance.UseAutoTargeting,
                     UseAutoFace = ATBSettings.Instance.UseAutoFace,
-                    UseSmartPull = ATBSettings.Instance.UseSmartPull
+                    UseSmartPull = ATBSettings.Instance.UseSmartPull,
+                    QueuePopped = QueueNotificationManager.IsQueuePoppedState
                 };
 
                 if (target != null && target.IsValid && !target.IsDead)
@@ -413,6 +416,10 @@ namespace RaidCombat
 
             menu.Items.Add(new Separator());
 
+            var miTestFlash = new MenuItem { Header = "🔔 Test Queue Flash (测试状态栏闪烁)" };
+            miTestFlash.Click += (s, e) => QueueNotificationManager.TestAlert();
+            menu.Items.Add(miTestFlash);
+
             var miReset = new MenuItem { Header = "🔄 Reset Position (重置位置)" };
             miReset.Click += (s, e) =>
             {
@@ -455,7 +462,12 @@ namespace RaidCombat
             var snapshot = _currentSnapshot ?? new OverlaySnapshot { IsRunning = isRunning, IsPaused = isPaused };
 
             // Status Badge
-            if (!snapshot.IsRunning)
+            if (snapshot.QueuePopped)
+            {
+                _statusBadge.Text = "🔔 READY!";
+                _statusBadgeBorder.Background = _brushQueuePopped;
+            }
+            else if (!snapshot.IsRunning)
             {
                 _statusBadge.Text = "STOPPED";
                 _statusBadgeBorder.Background = _brushStopped;

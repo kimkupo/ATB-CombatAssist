@@ -20,6 +20,7 @@
   - Auto-Face: Automatically pivots player character toward the active target to prevent cast failures.
   - Auto-Switch: Instantly purges dead targets and acquires the next valid enemy within milliseconds.
   - Smart Pull: Automatically initiates combat on valid targets when engaged.
+- **Queue Pop Taskbar Flashing**: Automatically detects when Group Finder, Ready Check, or PvP Warzone/Arena matches are ready. Uses Win32 `FlashWindowEx` to pulse the game icon on the Windows Taskbar until focused, paired with audible alerts and screen toast notifications so you never miss a queue window while tabbed out.
 - **Modern Floating HUD Overlay (WPF)**:
   - Sleek dark glassmorphic design displaying target name, HP gauge, distance, and current combat status.
   - **Zero-Lock Snapshot Architecture**: Utilizes a producer-consumer snapshot pattern. Renders purely in memory on the UI thread without querying underlying game memory or thread-unsafe collections, preventing deadlocks or UI freezing.
@@ -59,6 +60,10 @@
   - 自动面向（Auto-Face）：施法时自动朝向当前有效目标，解决背对目标导致的技能施放失败。
   - 自动切怪：目标死亡瞬间（`< 200ms`）清理目标并转火下一合法敌人。
   - 智能开怪（Smart Pull）：接近敌人后自动进入战斗序列。
+- **排队成功状态栏闪烁提醒 (Queue Pop Taskbar Flash)**：
+  - 自动实时监听副本查找器 (Group Finder / 闪点峰会 / 战役)、就位确认 (Ready Check) 与 PvP 战场/竞技场 (Warzone / Arena) 排队匹配。
+  - 匹配成功时，通过 Win32 `FlashWindowEx` 持续在 Windows 底部任务栏高亮闪烁游戏图标，直至玩家切回游戏窗口，同时伴随系统提示音与屏幕悬浮通知，彻底杜绝切屏摸鱼错过确认进入的问题。
+  - 提供一键测试闪烁按钮与详细个性化配置开关。
 - **极简暗黑 WPF 悬浮 HUD**：
   - 实时显示当前目标名称、血条百分比、距离与运行状态。
   - **零锁快照架构（Producer-Consumer Snapshot）**：采用不可变内存快照，UI 线程不调用任何非线程安全的底层内存字典，彻底杜绝死锁与界面假死。

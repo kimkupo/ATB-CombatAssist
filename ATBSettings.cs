@@ -246,5 +246,38 @@ namespace RaidCombat
             get => _useToastMessages;
             set { if (_useToastMessages != value) { _useToastMessages = value; Save(); } }
         }
+
+        // ==================== Queue Pop Notifications ====================
+        private bool _flashTaskbarOnQueuePop = true;
+        [DefaultValue(true)]
+        public bool FlashTaskbarOnQueuePop
+        {
+            get => _flashTaskbarOnQueuePop;
+            set { if (_flashTaskbarOnQueuePop != value) { _flashTaskbarOnQueuePop = value; Save(); } }
+        }
+
+        private bool _continuousFlashOnQueuePop = true;
+        [DefaultValue(true)]
+        public bool ContinuousFlashOnQueuePop
+        {
+            get => _continuousFlashOnQueuePop;
+            set { if (_continuousFlashOnQueuePop != value) { _continuousFlashOnQueuePop = value; Save(); } }
+        }
+
+        private bool _soundOnQueuePop = true;
+        [DefaultValue(true)]
+        public bool SoundOnQueuePop
+        {
+            get => _soundOnQueuePop;
+            set { if (_soundOnQueuePop != value) { _soundOnQueuePop = value; Save(); } }
+        }
+
+        private bool _toastOnQueuePop = true;
+        [DefaultValue(true)]
+        public bool ToastOnQueuePop
+        {
+            get => _toastOnQueuePop;
+            set { if (_toastOnQueuePop != value) { _toastOnQueuePop = value; Save(); } }
+        }
     }
 }

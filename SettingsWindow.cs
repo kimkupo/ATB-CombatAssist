@@ -33,6 +33,11 @@ namespace RaidCombat
         private readonly ComboBox _cbTheme;
         private readonly CheckBox _chkToast;
 
+        private readonly CheckBox _chkFlashTaskbar;
+        private readonly CheckBox _chkContinuousFlash;
+        private readonly CheckBox _chkSoundQueue;
+        private readonly CheckBox _chkToastQueue;
+
         public SettingsWindow()
         {
             Title = "ATB - Combat Assist Settings";
@@ -282,6 +287,64 @@ namespace RaidCombat
             tabOverlay.Content = panelOverlay;
             tabControl.Items.Add(tabOverlay);
 
+            // ---------- Tab 4: Queue Pop Notifications ----------
+            var tabQueue = new TabItem { Header = "🔔 排队提醒 (Queue)" };
+            var panelQueue = new StackPanel { Margin = new Thickness(14, 10, 14, 10) };
+
+            var queueDescBorder = new Border
+            {
+                Background = new SolidColorBrush(Color.FromArgb(120, 20, 35, 50)),
+                BorderBrush = new SolidColorBrush(Color.FromRgb(0, 229, 255)),
+                BorderThickness = new Thickness(1),
+                CornerRadius = new CornerRadius(4),
+                Padding = new Thickness(10, 8, 10, 8),
+                Margin = new Thickness(0, 0, 0, 12)
+            };
+            var queueDescText = new TextBlock
+            {
+                Text = "自动检测副本/活动查找器 (Group Finder)、就位确认 (Ready Check) 与 PvP 战场/竞技场 (Warzone/Arena) 排队成功，并在 Windows 任务栏闪烁游戏图标，提醒玩家及时切回游戏确认进入。",
+                Foreground = Brushes.Silver,
+                FontSize = 11.5,
+                TextWrapping = TextWrapping.Wrap
+            };
+            queueDescBorder.Child = queueDescText;
+            panelQueue.Children.Add(queueDescBorder);
+
+            _chkFlashTaskbar = CreateCheckBox("启用排队成功后游戏在状态栏闪烁提醒 (Flash Game in Taskbar)", s.FlashTaskbarOnQueuePop);
+            panelQueue.Children.Add(_chkFlashTaskbar);
+
+            _chkContinuousFlash = CreateCheckBox("持续闪烁直到切换回游戏窗口 (Flash Continuously Until Game Focused)", s.ContinuousFlashOnQueuePop);
+            _chkContinuousFlash.Margin = new Thickness(22, 2, 0, 8);
+            panelQueue.Children.Add(_chkContinuousFlash);
+
+            _chkSoundQueue = CreateCheckBox("排队成功播放系统提示音 (Play Audio Alert)", s.SoundOnQueuePop);
+            panelQueue.Children.Add(_chkSoundQueue);
+
+            _chkToastQueue = CreateCheckBox("排队成功弹出屏幕悬浮提示 (Show Toast Notification)", s.ToastOnQueuePop);
+            panelQueue.Children.Add(_chkToastQueue);
+
+            var btnTestQueue = new Button
+            {
+                Content = "🔔 立即测试状态栏闪烁与提醒效果 (Test Flash Alert)",
+                Width = 280,
+                Height = 30,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Margin = new Thickness(0, 16, 0, 0),
+                Background = new SolidColorBrush(Color.FromRgb(35, 45, 60)),
+                Foreground = new SolidColorBrush(Color.FromRgb(0, 229, 255)),
+                BorderBrush = new SolidColorBrush(Color.FromRgb(0, 168, 204)),
+                FontWeight = FontWeights.SemiBold,
+                Cursor = Cursors.Hand
+            };
+            btnTestQueue.Click += (sender, e) =>
+            {
+                QueueNotificationManager.TestAlert();
+            };
+            panelQueue.Children.Add(btnTestQueue);
+
+            tabQueue.Content = panelQueue;
+            tabControl.Items.Add(tabQueue);
+
             Grid.SetRow(tabControl, 1);
             rootGrid.Children.Add(tabControl);
 
@@ -395,6 +458,12 @@ namespace RaidCombat
             s.OverlayOpacity = _sliderOpacity.Value;
             s.Theme = (OverlayTheme)Math.Max(0, _cbTheme.SelectedIndex);
             s.UseToastMessages = _chkToast.IsChecked ?? true;
+
+            // Queue pop settings
+            s.FlashTaskbarOnQueuePop = _chkFlashTaskbar.IsChecked ?? true;
+            s.ContinuousFlashOnQueuePop = _chkContinuousFlash.IsChecked ?? true;
+            s.SoundOnQueuePop = _chkSoundQueue.IsChecked ?? true;
+            s.ToastOnQueuePop = _chkToastQueue.IsChecked ?? true;
 
             s.Save();
 

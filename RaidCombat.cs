@@ -69,6 +69,8 @@ namespace RaidCombat
                 var me = Core.Player;
                 OverlayWindow.UpdateSnapshot(me, me?.Target, IsPaused);
             }
+
+            QueueNotificationManager.Pulse();
         }
 
         private static SettingsWindow _activeSettingsWindow;
@@ -83,6 +85,9 @@ namespace RaidCombat
             {
                 OverlayWindow.EnsureStarted();
             }
+
+            // Start queue pop background monitor
+            QueueNotificationManager.StartMonitor();
         }
 
         public override void OnButtonPress()
@@ -202,6 +207,7 @@ namespace RaidCombat
 
         public override void OnShutdown()
         {
+            QueueNotificationManager.StopMonitor();
             ATBHotkeys.UnregisterAll();
             OverlayWindow.CloseOverlay();
         }
